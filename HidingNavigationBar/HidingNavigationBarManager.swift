@@ -233,8 +233,9 @@ open class HidingNavigationBarManager: NSObject, UIScrollViewDelegate, UIGesture
             break;
         }
         
-        
-        
+        if hotspotEnabled && currentState == .Open {
+            self.navBarController.view.frame = CGRect(x: self.navBarController.view.frame.origin.x, y: self.navBarController.view.frame.origin.y, width: self.navBarController.view.frame.size.width, height: 24)
+        }
     }
     
     //MARK: Private methods
