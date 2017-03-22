@@ -162,6 +162,9 @@ open class HidingNavigationBarManager: NSObject, UIScrollViewDelegate, UIGesture
     
     open func viewWillDisappear(_ animated: Bool) {
         expand()
+        if hotspotEnabled {
+            navBarController.view.frame = CGRect(x:navBarController.view.frame.origin.x , y:navBarController.view.frame.origin.y  , width:navBarController.view.frame.size.width , height:24)
+        }
     }
     
     open func updateValues()	{
