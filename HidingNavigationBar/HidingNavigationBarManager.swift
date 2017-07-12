@@ -10,7 +10,7 @@ import UIKit
 
 public protocol HidingNavigationBarManagerDelegate: class {
     func hidingNavigationBarManagerDidUpdateScrollViewInsets(_ manager: HidingNavigationBarManager)
-    func hidingNavigationBarManagerDidChangeState(_ manager: HidingNavigationBarManager, toState state: HidingNavigationBarState)
+    func hidingNavigationBarManagerDidChangeState(_ manager: HidingNavigationBarManager, toState state: HidingNavigationBarState)    
 }
 
 public enum HidingNavigationBarState: String {
@@ -167,6 +167,10 @@ open class HidingNavigationBarManager: NSObject, UIScrollViewDelegate, UIGesture
         }
     }
     
+    open func updateNavbarFrameForHotspot() {
+        navBarController.view.frame = CGRect(x:navBarController.view.frame.origin.x , y:navBarController.view.frame.origin.y  , width:navBarController.view.frame.size.width , height:24)
+    }
+    
     open func updateValues()	{
         isUpdatingValues = true
         
@@ -258,7 +262,6 @@ open class HidingNavigationBarManager: NSObject, UIScrollViewDelegate, UIGesture
     
     fileprivate func shouldHandleScrolling() -> Bool {
         
-        
         // if scrolling down past top
         if scrollView.contentOffset.y <= -scrollView.contentInset.top && currentState == .Open {
             return false
@@ -276,7 +279,9 @@ open class HidingNavigationBarManager: NSObject, UIScrollViewDelegate, UIGesture
         return isViewControllerVisible() && scrollViewIsSuffecientlyLong && !isUpdatingValues
     }
     
+    
     fileprivate func handleScrolling(){
+        
         if shouldHandleScrolling() == false {
             return
         }
@@ -347,6 +352,7 @@ open class HidingNavigationBarManager: NSObject, UIScrollViewDelegate, UIGesture
         if state != currentState {
             delegate?.hidingNavigationBarManagerDidChangeState(self, toState: currentState)
         }
+        
     }
     
     fileprivate func updateContentInsets() {
